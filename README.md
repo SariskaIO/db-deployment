@@ -7,6 +7,6 @@
 references:
   https://www.containiq.com/post/deploy-redis-cluster-on-kubernetes
   
-more advanced checkout:
+for highly available and scalable deployment checkout:
   
   https://github.com/bitnami/charts/tree/main/bitnami/redis-cluster/#installing-the-chart
