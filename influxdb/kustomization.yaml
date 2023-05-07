@@ -3,17 +3,16 @@ kind: Kustomization
 namespace: streaming
 
 resources:
-- redis-service.yaml
-- redis-deployment.yaml
-
-
-commonLabels:
-  scope: redis
+- influxdb-pvc.yaml
+- influxdb-secrets.yaml
+- influxdb-service-account.yaml
+- influxdb-service.yaml
+- influxdb-statefulset.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
-  
+
 configMapGenerator:
-  - name: redis-config
+  - name: influxdb-config
     files:
-    - redis.conf
+    - influxdb.conf

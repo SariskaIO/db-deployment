@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: influxdb
+spec:
+  selector:
+    matchLabels:
+      app: influxdb
+  serviceName: influxdb
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      serviceAccountName: influxdb
+      containers:
+      - name: influxdb
+        image: influxdb:latest
+        ports:
+        - containerPort: 8086
+        volumeMounts:
+        - name: influxdb-pv
+          mountPath: /var/lib/influxdb
+        - name: influxdb-config
+          mountPath: /etc/influxdb
+        - name: influxdb-secrets
+          mountPath: /etc/influxdb/secrets
+          readOnly: true
+      volumes:
+      - name: influxdb-pv
+        persistentVolumeClaim:
+          claimName: influxdb-pvc
+      - name: influxdb-config
+        configMap:
+          name: influxdb-config
+      - name: influxdb-secrets
+        secret:
+          secretName: influxdb-secrets
